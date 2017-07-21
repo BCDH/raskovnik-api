@@ -1,0 +1,565 @@
+FORMAT: 1A
+HOST: http://raskovnik.org/api
+
+# Raskovnik API
+
+Raskovnik is an API that allows consumers to do the context-based search on TEI dictionaries, which can be either directly through searching their own paths or searching for specific lemmas.
+It also allows various other functionalities to view results in different forms as per the user.
+
+# Allowed HTTPs requests:
+<pre>
+GET     : Get a resource or list of resources
+</pre>
+
+# Description Of Usual Server Responses:
+- 200 `OK` - the request was successful.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.
+- 403 `Forbidden` - access denied.
+- 404 `Not Found` - resource was not found.
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+- 412 `Precondition Failed` - requested parameters are not valid.
+- 500 `Internal Server Error` - API has been broken.
+
+# Pagination and Headers:
+
+Raskovnik API supports various response headers and pagination for the easy retrieval of responses in a better fashion. Most of the collections as described below have few optional
+parameters to support pagination, by which client can expect results satisfying the given queries in various pages. 
+
+## Headers
+
+Consider the following example and description of the generated headers as follows:
+
+If given query returns the expected results to the exact total of `90`, and, if limit is `10`, then there would be 9 (90 / 10) pages, i.e, `total divided by limit`.
+Using these values, client can retrieve various results and navigate forth and back to next set of results.
+
+
++ HTTP Headers 
+    + `X-Current-Page` - Shows the current page of results-subset, e.g., can be 1 to 9 in above example as asked by client.
+    + `X-Limit` - Shows the number of results per page, e.g., 10.
+    + `X-Total-Pages` - Shows the total number of pages, e.g., 9.
+    + `X-Total-Results` - Shows the total number of results, e.g., 90.
+
+## Pagination
+
+Along with various headers, one additional link header is being provided by the API to smoothly navigate to the first, previous, next and the last page. The url is automatically
+being created by the API itself along with the set user values for "limit" and "page".
+
+Consider the following `link` header, where the client is on Page 4:
+
+```xml
+<http://raskovnik.org/api/v1/slices?query=//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]&page=1&limit=10>; rel="first",
+<http://raskovnik.org/api/v1/slices?query=//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]&page=2&limit=10>; rel="prev",
+<http://raskovnik.org/api/v1/slices?query=//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]&page=5&limit=10>; rel="next",
+<http://raskovnik.org/api/v1/slices?query=//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]&page=273&limit=10>; rel="last"
+```
+
++ Link Header
+    + `first` - Shows the url for the first page of results, marked with rel="first"
+    + `prev` - Shows the url for the previous page of results, marked with rel="prev"
+    + `next` - Shows the url for the next page of results, marked with rel="next"
+    + `last` - Shows the url for the last page of results, marked with rel="last"
+
+`Note:` Limit can be set to `0` in order to fetch all results in a single page and remove pagination link.
+
+
+## Entries Collection [/v1/entries{?lemma,dict,page,limit,transform,format,group,wrap,contains}]
+
+Returns the lemma entries searched in the given dictionaries which could either be the exact lemma or the words containing the lemma.
+
++ Parameters
+    + lemma: `аба` (required, String) -  a lemma need to be searched
+    + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
+        + Default: all
+    + page (optional, Number) - page of results expected by client.
+        + Default: 1
+    + limit: `1` (optional, Number) - maximum number of records expected by client.
+        + Default: 10
+    + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
+        + Default: false
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + group (optional, enum[string]) - group results by dictionary.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+    + contains (optional, enum[string]) - specifies whether the lemma returned should be an exact match of the query string or if it should contain it.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+         
+### List First Lemma Entry [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" xml:id="GE.RKMD.аба">
+                <form type="lemma">
+                    <orth norm="аба">а̑ба</orth>
+                </form>,
+                <form type="ending">
+                    <orth>а̄бе̑</orth>
+                </form>
+                <gramGrp>
+                    <pos>ж.</pos>
+                </gramGrp> тако зове млађи брат или сестра старију сестру, сеја:
+                <hi rend="italic">А̑ба</hi> Ве̏тка,
+                <hi rend="italic">а̑ба</hi> Ро̑са, од тур.
+                <hi rend="italic">аblа</hi> им., скраћено
+                <hi rend="italic">аbа</hi>
+                <xr type="negative">
+                    <lbl>У В. и РЈА н.</lbl>
+                </xr>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id="GE.RKMD.А2">А̏</ras:prev>
+                    <ras:next id="GE.RKMD.Абаз">Аба̏з</ras:next>
+                </ras:extras>
+            </entryFree>
+        </exist:result>
+
+## Slices Collection [/v1/slices{?query,dict,page,limit,transform,format,group,wrap}]
+
+Returns the slices on the basis of given XPath query in the given dictionaries. Very useful for searching selective paths.
+        
++ Parameters
+    + query: `//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]` (required, XPath) -  a XPath expression to generate the slice.Dictionaries XML structure should be known to client for quering. 
+    For more details on XPath, see https://www.w3schools.com/xml/xpath_intro.asp.
+    + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
+        + Default: all
+    + page (optional, Number) - page of results expected by client.
+        + Default: 1
+    + limit (optional, Number) - maximum number of records expected by client.
+        + Default: 10
+    + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
+        + Default: false
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + group (optional, enum[string]) - group results by dictionary.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+         
+### List First 10 Slices [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="аба">а́ба</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="абер">абе́р</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="аберџија">аберџи́ја</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="абетер">а́бетер</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="аванџија">аванџи́ја</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="авлија">авли́ја</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="агальк">агаль́к</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="адьм">адь́м</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="аза">а́за</orth>
+            </form>
+            <form xmlns="http://www.tei-c.org/ns/1.0" type="lemma">
+                <orth norm="азьр">азь́р</orth>
+            </form>
+        </exist:result>
+
+
+## Context Collection [/v1/context{?entry,left,right,return,transform,format,group,wrap}]
+
+Returns the siblings of the given entry in the entire dictionary wrapped in divs mentioning left, current and right for the
+preceding, current and following siblings respectively.
+
++ Parameters
+    + entry: `VSK.SR.поштарев` (required, String) -  an entry need to be searched. 
+    + left:`1` (optional, Number) - count of the expected preceding-siblings for the given entry. Maximum value can be `50`.
+        + Default: 10
+    + right:`1` (optional, Number) - count of the expected following-siblings for the given entry. Maximum value can be `50`.
+        + Default: 10
+    + return (optional, enum[string]) - return only preceding siblings, if set to "left", following siblings, if set to "right", else both.
+        + Default: both
+        + Members
+            + `both`
+            + `left`
+            + `right`
+    + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
+        + Default: false
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + group (optional, enum[string]) - group results by dictionary.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+         
+### List Context [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <div xmlns="http://www.tei-c.org/ns/1.0" type="left">
+                <entryFree xml:id="VSK.SR.поштар" sortKey="поштар">
+                    <form type="lemma">
+                        <orth norm="поштар">по̏шта̑р</orth>
+                    </form>,
+                    <gramGrp>
+                        <pos>m.</pos>
+                    </gramGrp>
+                    <sense xml:id="d1e815904">
+                        <cit type="translation">
+                            <quote xml:lang="de">der Postmeister</quote>
+                        </cit>,
+                        <cit type="translation">
+                            <quote xml:lang="la">cursui publico praepositus</quote>
+                        </cit>.
+                        <xr type="cf">
+                            <lbl>cf.</lbl>
+                            <ref target="#VSK.SR.пошта.3">
+                                <rs type="lemma">пошта</rs>
+                                <rs type="senseNum" source="#thirdEd">[3]</rs>
+                            </ref>
+                        </xr>.
+                    </sense>
+                    <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                        <ras:prev id="VSK.SR.поштапити_се">пошта́пити се</ras:prev>
+                        <ras:next id="VSK.SR.поштарев">по̏шта̑рев</ras:next>
+                    </ras:extras>
+                </entryFree>
+            </div>
+            <div xmlns="http://www.tei-c.org/ns/1.0" type="current">
+                <entryFree xml:id="VSK.SR.поштарев" sortKey="поштарев" source="#firstEd" type="accidentallyOmittedFromSecondEd"> [
+                    <form type="lemma">
+                        <orth norm="поштарев">по̏шта̑рев</orth>,
+                        <form type="ending">
+                            <orth>а</orth>
+                        </form>,
+                        <form type="ending">
+                            <orth>о</orth>
+                        </form>
+                    </form>
+                    <form type="lemma" xml:id="VSK.SR.поштаров">
+                        <orth norm="поштаров">по̏шта̑ров</orth>
+                        <form type="ending">
+                            <orth>а</orth>
+                        </form>,
+                        <form type="ending">
+                            <orth>о</orth>
+                        </form>
+                    </form>,
+                    <gramGrp source="#digitalEd">
+                        <pos>adj.</pos>
+                    </gramGrp>
+                    <sense xml:id="d1e815949">
+                        <cit type="translation">
+                            <quote xml:lang="de">des Postmeisters</quote>
+                        </cit>. —
+                        <note source="#thirdEd">Из I. издања</note>.]
+                    </sense>
+                    <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                        <ras:prev id="VSK.SR.поштар">по̏шта̑р</ras:prev>
+                        <ras:next id="VSK.SR.поштедети">поште́дети</ras:next>
+                    </ras:extras>
+                </entryFree>
+            </div>
+            <div xmlns="http://www.tei-c.org/ns/1.0" type="right">
+                <entryFree xml:id="VSK.SR.поштедети" sortKey="поштедети">
+                    <form type="lemma">
+                        <orth norm="поштедети">поште́дети</orth>
+                        <usg type="diatopic">(
+                            <rs type="geo" ana="place" ref="references/places.xml#istok">ист.</rs>)
+                        </usg>
+                    </form>,
+                    <form type="lemma" xml:id="VSK.SR.поштедити">
+                        <orth norm="поштедити">поште́дити</orth>
+                        <usg type="diatopic">(
+                            <rs type="geo" ana="place" ref="references/places.xml#zapad">зап.</rs>)
+                        </usg>
+                    </form>,
+                    <form type="lemma" xml:id="VSK.SR.поштедјети">
+                        <orth norm="поштедјети">поште́дјети</orth>
+                        <usg type="diatopic">(
+                            <rs type="geo" ana="place" ref="references/places.xml#jugozapad">југоз.</rs>)
+                        </usg>
+                    </form> и
+                    <form type="lemma" xml:id="VSK.SR.поштеђети">
+                        <orth norm="поштеђети">поште́ђети</orth>
+                        <usg type="diatopic">(
+                            <rs type="geo" ana="place" ref="references/places.xml#jug">јуж.</rs>)
+                        </usg>
+                    </form>,
+                    <form type="ending">
+                        <orth>ште́ди̑м</orth>
+                    </form>
+                    <gramGrp>
+                        <pos>v. pf.</pos>
+                    </gramGrp>
+                    <sense xml:id="d1e816018">
+                        <cit type="translation">
+                            <quote xml:lang="de">sparen</quote>
+                        </cit>,
+                        <cit type="translation">
+                            <quote xml:lang="la">parco</quote>
+                        </cit>:
+                        <cit type="example">
+                            <quote xml:lang="sr">немој 
+                                <hi rend="italic">поштедити</hi>труда
+                            </quote>
+                        </cit>.
+                    </sense>
+                    <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                        <ras:prev id="VSK.SR.поштарев">по̏шта̑рев</ras:prev>
+                        <ras:next id="VSK.SR.поштен">по̀штен</ras:next>
+                    </ras:extras>
+                </entryFree>
+            </div>
+        </exist:result>
+        
+## Range Collection [/v1/range{?from,to,transform,format,group,wrap}]
+
+Returns the range of entries between given "from" and "to" entries. It includes the "from" and "to" entries along with the result.
+
++ Parameters
+    + from: `MZ.RGJS.аба1` (required, String) -  an entry where search should begin from.
+    + to: `MZ.RGJS.абење` (required, String) -  an entry till search should last.
+    + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
+        + Default: false
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + group (optional, enum[string]) - group results by dictionary.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+         
+### List Range [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" type="hom" xml:id="MZ.RGJS.аба1" n="1">
+                <form type="lemma">
+                    <orth norm="аба">а́ба</orth>
+                </form>
+                <gramGrp>
+                    <pos>ж</pos>
+                </gramGrp>
+                <etym>(
+                    <lang value="arc">арам.</lang>)
+                </etym>
+                <etym>(
+                    <lang value="tr">тур.</lang>
+                    <mentioned xml:lang="tr">abba</mentioned>)
+                </etym>
+                <sense>
+                    <def>одмила за мајку и старију жену уопште.</def>
+                    <cit type="example">
+                        <quote>„До́ђи, або, ма́јка ми те че́ка”</quote>
+                        <bibl>(
+                            <rs type="geo" nymRef="Врање" key="3015">Врање</rs>).
+                        </bibl>
+                    </cit>
+                </sense>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id=""/>
+                    <ras:next id="MZ.RGJS.аба2">а́ба</ras:next>
+                </ras:extras>
+            </entryFree>
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" type="hom" xml:id="MZ.RGJS.аба2" n="2">
+                <form type="lemma">
+                    <orth norm="аба">а́ба</orth>
+                </form>
+                <gramGrp>
+                    <pos>ж</pos>
+                </gramGrp>
+                <sense>
+                    <def>бол испод груди.</def>
+                    <cit type="example">
+                        <quote>„Од ба́бу сам научила да ба́јем од а́бу.” </quote>
+                        <bibl rend="hidden">(
+                            <rs type="geo" nymRef="Врање" key="3015">Врање</rs>).
+                        </bibl>
+                    </cit>
+                    <cit type="example">
+                        <quote>„Бо́ли ме и́спод гру́ди, викав а́ба је”</quote>
+                        <bibl>(
+                            <rs type="geo" nymRef="Врање" key="3015">Врање</rs>).
+                        </bibl>
+                    </cit>
+                </sense>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id="MZ.RGJS.аба1">а́ба</ras:prev>
+                    <ras:next id="MZ.RGJS.Абаз">Аба́з</ras:next>
+                </ras:extras>
+            </entryFree>
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" xml:id="MZ.RGJS.Абаз">
+                <form type="lemma">
+                    <orth norm="Абаз">Аба́з</orth>
+                </form>
+                <gramGrp>
+                    <pos>м</pos>
+                </gramGrp> (
+                <form type="inflected">
+                    <lbl>мн.</lbl>
+                    <orth>Аба́зови</orth>
+                </form>)
+                <sense>
+                    <def>надимак /Мијовце/.</def>
+                </sense>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id="MZ.RGJS.аба2">а́ба</ras:prev>
+                    <ras:next id="MZ.RGJS.абење">абе́ње</ras:next>
+                </ras:extras>
+            </entryFree>
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" xml:id="MZ.RGJS.абење">
+                <form type="lemma">
+                    <orth norm="абење">абе́ње</orth>
+                </form>
+                <gramGrp>
+                    <pos>с</pos>
+                </gramGrp>
+                <xr type="verbalNounFrom">
+                    <lbl>гл. им. од</lbl>
+                    <ref target="#MZ.RGJS.абим">
+                        <rs type="lemma">аби(ти)</rs>
+                    </ref>.
+                </xr>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id="MZ.RGJS.Абаз">Аба́з</ras:prev>
+                    <ras:next id="MZ.RGJS.абер">абе́р</ras:next>
+                </ras:extras>
+            </entryFree>
+        </exist:result>
+        
+ 
+## Random Collection [/v1/random{?dict,transform,format,group,wrap}]
+
+Returns a random lemma entry from the given dictionary which can be used for RSS feeds.
+
++ Parameters
+    + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
+        + Default: all
+    + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
+        + Default: false
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + group (optional, enum[string]) - group results by dictionary.
+        + Default: false
+        + Members
+            + `true`
+            + `false`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+         
+### List Random Lemma Entry [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <entryFree xmlns="http://www.tei-c.org/ns/1.0" xml:id="GE.RKMD.аба">
+                <form type="lemma">
+                    <orth norm="аба">а̑ба</orth>
+                </form>,
+                <form type="ending">
+                    <orth>а̄бе̑</orth>
+                </form>
+                <gramGrp>
+                    <pos>ж.</pos>
+                </gramGrp> тако зове млађи брат или сестра старију сестру, сеја:
+                <hi rend="italic">А̑ба</hi> Ве̏тка,
+                <hi rend="italic">а̑ба</hi> Ро̑са, од тур.
+                <hi rend="italic">аblа</hi> им., скраћено
+                <hi rend="italic">аbа</hi>
+                <xr type="negative">
+                    <lbl>У В. и РЈА н.</lbl>
+                </xr>
+                <ras:extras xmlns:ras="http://raskovnik.org/ns/1.0">
+                    <ras:prev id="GE.RKMD.А2">А̏</ras:prev>
+                    <ras:next id="GE.RKMD.Абаз">Аба̏з</ras:next>
+                </ras:extras>
+            </entryFree>
+        </exist:result>
+        
+## Config Collection [/v1/config{?format,wrap}]
+
+Returns the Raskovnik API current set configuration. 
+
++ Parameters
+    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+        + Default: xml
+        + Members
+            + `xml`
+            + `json`
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+        + Default: true
+        + Members
+            + `true`
+            + `false`
+         
+### List Config [GET]
+
++ Response 200 (application/xml)
+
+        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
+            <raskovnik-configuration xmlns="http://bcdh.com/ns/config" xmlns:conf="http://bcdh.com/ns/config">
+                <collection-name>/db/raskovnik-data</collection-name>
+                <transformation-path>/db/raskovnik-modules/xslt</transformation-path>
+                <default-transformation>entry2html.xsl</default-transformation>
+                <max-siblings-count>50</max-siblings-count>
+                <max-range-count>100</max-range-count>
+                <canonical-url>raskovnik.org/api</canonical-url>
+            </raskovnik-configuration>
+        </exist:result>
