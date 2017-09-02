@@ -4,15 +4,13 @@ HOST: http://raskovnik.org/api
 # Raskovnik API
 
 Raskovnik API is an application programming interface which allows clients to perform context-based searches
-on TEI-encoded dictionaries, which can be either directly through searching their own paths or searching for specific lemmas.
-It also allows various other functionalities to view results in different forms as per the user.
+on TEI-encoded dictionaries hosted on [raskovnik.org](http://raskovnik.org).
 
-# Allowed HTTPs requests:
-<pre>
-GET     : Get a resource or list of resources
-</pre>
+# Allowed HTTP requests:
 
-# Description Of Usual Server Responses:
+`GET`: Get a resource or list of resources
+
+# Description of Usual Server Responses:
 - 200 `OK` - the request was successful.
 - 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
 - 400 `Bad Request` - the request could not be understood or was missing required parameters.
@@ -25,27 +23,28 @@ GET     : Get a resource or list of resources
 
 # Pagination and Headers:
 
-Raskovnik API supports various response headers and pagination for the easy retrieval of responses in a better fashion. Most of the collections as described below have few optional
-parameters to support pagination, by which client can expect results satisfying the given queries in various pages. 
+Raskovnik API supports various response headers and pagination for the easy retrieval of longer responses. 
+Most of the endpoints described below have optional parameters to support pagination.
 
 ## Headers
 
 Consider the following example and description of the generated headers as follows:
 
-If given query returns the expected results to the exact total of `90`, and, if limit is `10`, then there would be 9 (90 / 10) pages, i.e, `total divided by limit`.
-Using these values, client can retrieve various results and navigate forth and back to next set of results.
-
+If a given query returns the expected results to the exact total of `90`, and, if limit is `10`, 
+then there would be 9 (90 / 10) pages, i.e, `total divided by limit`. Using these values, 
+the client can retrieve various results and navigate forth and back to the next set of results.
 
 + HTTP Headers 
-    + `X-Current-Page` - Shows the current page of results-subset, e.g., can be 1 to 9 in above example as asked by client.
+    + `X-Current-Page` - Shows the current page of the results-subset, e.g., can be 1 to 9 in the above example.
     + `X-Limit` - Shows the number of results per page, e.g., 10.
     + `X-Total-Pages` - Shows the total number of pages, e.g., 9.
     + `X-Total-Results` - Shows the total number of results, e.g., 90.
 
 ## Pagination
 
-Along with various headers, one additional link header is being provided by the API to smoothly navigate to the first, previous, next and the last page. The url is automatically
-being created by the API itself along with the set user values for "limit" and "page".
+Along with various headers, one additional link header is  provided by the API to smoothly 
+navigate to the first, previous, next and the last page. The url is automatically created 
+by the API itself along with the set user values for "limit" and "page".
 
 Consider the following `link` header, where the client is on Page 4:
 
@@ -65,12 +64,12 @@ Consider the following `link` header, where the client is on Page 4:
 `Note:` Limit can be set to `0` in order to fetch all results in a single page and remove pagination link.
 
 
-## Entries Collection [/v1/entries{?lemma,dict,page,limit,transform,format,group,wrap,contains}]
+## Entries [/v1/entries{?lemma,dict,page,limit,transform,format,group,wrap,contains}]
 
-Returns the lemma entries searched in the given dictionaries which could either be the exact lemma or the words containing the lemma.
+Returns entries based on the lemma (dictionary headword) in the given dictionaries.
 
 + Parameters
-    + lemma: `аба` (required, String) -  a lemma need to be searched
+    + lemma: `аба` (required, String) -  a lemma to be searched
     + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
         + Default: all
     + page (optional, Number) - page of results expected by client.
@@ -89,7 +88,7 @@ Returns the lemma entries searched in the given dictionaries which could either 
         + Members
             + `true`
             + `false`
-    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped with a surrounding &lt;exist:result&gt; element.
         + Default: true
         + Members
             + `true`
@@ -129,12 +128,12 @@ Returns the lemma entries searched in the given dictionaries which could either 
             </entryFree>
         </exist:result>
 
-## Slices Collection [/v1/slices{?query,dict,page,limit,transform,format,group,wrap}]
+## Slices [/v1/slices{?query,dict,page,limit,transform,format,group,wrap}]
 
-Returns the slices on the basis of given XPath query in the given dictionaries. Very useful for searching selective paths.
+Returns a dictionary "slice" on the basis of the submitted XPath query in the given dictionaries. The client should be familiar with the XML structure of the dicitonary.
         
 + Parameters
-    + query: `//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]` (required, XPath) -  a XPath expression to generate the slice.Dictionaries XML structure should be known to client for quering. 
+    + query: `//entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]` (required, XPath) -  an XPath expression to generate the slice.  
     For more details on XPath, see https://www.w3schools.com/xml/xpath_intro.asp.
     + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
         + Default: all
@@ -154,7 +153,7 @@ Returns the slices on the basis of given XPath query in the given dictionaries. 
         + Members
             + `true`
             + `false`
-    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped with a surrounding &lt;exist:result&gt; element.
         + Default: true
         + Members
             + `true`
@@ -198,13 +197,13 @@ Returns the slices on the basis of given XPath query in the given dictionaries. 
         </exist:result>
 
 
-## Context Collection [/v1/context{?entry,left,right,return,transform,format,group,wrap}]
+## Context [/v1/context{?entry,left,right,return,transform,format,group,wrap}]
 
-Returns the siblings of the given entry in the entire dictionary wrapped in divs mentioning left, current and right for the
-preceding, current and following siblings respectively.
+Returns the siblings of the given entry wrapped in divs (with `@type` attribute having possible values  `left`, `current` and `right` for the
+preceding, current and following siblings respectively.)
 
 + Parameters
-    + entry: `VSK.SR.поштарев` (required, String) -  an entry need to be searched. 
+    + entry: `VSK.SR.поштарев` (required, String) -  an entry whose context is requested.
     + left:`1` (optional, Number) - count of the expected preceding-siblings for the given entry. Maximum value can be `50`.
         + Default: 10
     + right:`1` (optional, Number) - count of the expected following-siblings for the given entry. Maximum value can be `50`.
@@ -355,9 +354,9 @@ preceding, current and following siblings respectively.
             </div>
         </exist:result>
         
-## Range Collection [/v1/range{?from,to,transform,format,group,wrap}]
+## Range [/v1/range{?from,to,transform,format,group,wrap}]
 
-Returns the range of entries between given "from" and "to" entries. It includes the "from" and "to" entries along with the result.
+Returns a range of entries given two entry ids. It includes the "from" and "to" entries along with the result.
 
 + Parameters
     + from: `MZ.RGJS.аба1` (required, String) -  an entry where search should begin from.
@@ -369,12 +368,12 @@ Returns the range of entries between given "from" and "to" entries. It includes 
         + Members
             + `xml`
             + `json`
-    + group (optional, enum[string]) - group results by dictionary.
+    + group (optional, enum[string]) - groups results by dictionary.
         + Default: false
         + Members
             + `true`
             + `false`
-    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped within a surrounding &lt;exist:result&gt; element.
         + Default: true
         + Members
             + `true`
@@ -480,26 +479,26 @@ Returns the range of entries between given "from" and "to" entries. It includes 
         </exist:result>
         
  
-## Random Collection [/v1/random{?dict,transform,format,group,wrap}]
+## Random [/v1/random{?dict,transform,format,group,wrap}]
 
-Returns a random lemma entry from the given dictionary which can be used for RSS feeds.
+Returns a random entry.
 
 + Parameters
-    + dict (optional, String) - retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
+    + dict (optional, String) - pool of dictionaries to consider. Multiple ids should be comma-separated, for instance dict=VSK.SR,MZ.RGJS.
         + Default: all
     + transform (optional, String) - name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.
         + Default: false
-    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
+    + format (optional, enum[string]) - the format expected by the client.
         + Default: xml
         + Members
             + `xml`
             + `json`
-    + group (optional, enum[string]) - group results by dictionary.
+    + group (optional, enum[string]) - groups results by dictionary.
         + Default: false
         + Members
             + `true`
             + `false`
-    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
+    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped within a surrounding &lt;exist:result&gt; element.
         + Default: true
         + Members
             + `true`
@@ -532,35 +531,4 @@ Returns a random lemma entry from the given dictionary which can be used for RSS
                     <ras:next id="GE.RKMD.Абаз">Аба̏з</ras:next>
                 </ras:extras>
             </entryFree>
-        </exist:result>
-        
-## Config Collection [/v1/config{?format,wrap}]
-
-Returns the Raskovnik API current set configuration. 
-
-+ Parameters
-    + format (optional, enum[string]) - results expected by client should be in XML or JSON.
-        + Default: xml
-        + Members
-            + `xml`
-            + `json`
-    + wrap (optional, enum[string]) - specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.
-        + Default: true
-        + Members
-            + `true`
-            + `false`
-         
-### List Config [GET]
-
-+ Response 200 (application/xml)
-
-        <exist:result xmlns:exist="http://exist.sourceforge.net/NS/exist">
-            <raskovnik-configuration xmlns="http://bcdh.com/ns/config" xmlns:conf="http://bcdh.com/ns/config">
-                <collection-name>/db/raskovnik-data</collection-name>
-                <transformation-path>/db/raskovnik-modules/xslt</transformation-path>
-                <default-transformation>entry2html.xsl</default-transformation>
-                <max-siblings-count>50</max-siblings-count>
-                <max-range-count>100</max-range-count>
-                <canonical-url>raskovnik.org/api</canonical-url>
-            </raskovnik-configuration>
         </exist:result>
