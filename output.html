@@ -1,0 +1,625 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Raskovnik API</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#fff;background-color:#337ab7}.action h4.action-heading .method.head{color:#fff;background-color:#337ab7}.action h4.action-heading .method.options{color:#fff;background-color:#337ab7}.action h4.action-heading .method.put{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.post{color:#fff;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#fff;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-allowed-http-requests-">Allowed HTTP requests:</a></li><li><a href="#header-description-of-usual-server-responses-">Description of Usual Server Responses:</a></li><li><a href="#header-pagination-and-headers-">Pagination and Headers:</a></li><li><a href="#header-headers">Headers</a></li><li><a href="#header-pagination">Pagination</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#">Resource Group</a></div><div class="collapse-content"><ul><li><a href="#entries-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>List First Lemma Entry</a></li><li><a href="#slices-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>List First 10 Slices</a></li><li><a href="#context-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>List Context</a></li><li><a href="#range-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>List Range</a></li><li><a href="#random-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>List Random Lemma Entry</a></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="http://raskovnik.org/api">http://raskovnik.org/api</a></p></nav><div class="content"><header><h1 id="top">Raskovnik API</h1></header><p>Raskovnik API is an application programming interface which allows clients to perform context-based searches
+on TEI-encoded dictionaries hosted on <a href="http://raskovnik.org">raskovnik.org</a>.</p>
+<h1 id="header-allowed-http-requests-">Allowed HTTP requests: <a class="permalink" href="#header-allowed-http-requests-" aria-hidden="true">¶</a></h1>
+<p><code>GET</code>: Get a resource or list of resources</p>
+<h1 id="header-description-of-usual-server-responses-">Description of Usual Server Responses: <a class="permalink" href="#header-description-of-usual-server-responses-" aria-hidden="true">¶</a></h1>
+<ul>
+<li>
+<p>200 <code>OK</code> - the request was successful.</p>
+</li>
+<li>
+<p>204 <code>No Content</code> - the request was successful but there is no representation to return (i.e. the response is empty).</p>
+</li>
+<li>
+<p>400 <code>Bad Request</code> - the request could not be understood or was missing required parameters.</p>
+</li>
+<li>
+<p>401 <code>Unauthorized</code> - authentication failed or user doesn’t have permissions for requested operation.</p>
+</li>
+<li>
+<p>403 <code>Forbidden</code> - access denied.</p>
+</li>
+<li>
+<p>404 <code>Not Found</code> - resource was not found.</p>
+</li>
+<li>
+<p>405 <code>Method Not Allowed</code> - requested method is not supported for resource.</p>
+</li>
+<li>
+<p>412 <code>Precondition Failed</code> - requested parameters are not valid.</p>
+</li>
+<li>
+<p>500 <code>Internal Server Error</code> - API has been broken.</p>
+</li>
+</ul>
+<h1 id="header-pagination-and-headers-">Pagination and Headers: <a class="permalink" href="#header-pagination-and-headers-" aria-hidden="true">¶</a></h1>
+<p>Raskovnik API supports various response headers and pagination for the easy retrieval of longer responses.
+Most of the endpoints described below have optional parameters to support pagination.</p>
+<h2 id="header-headers">Headers <a class="permalink" href="#header-headers" aria-hidden="true">¶</a></h2>
+<p>Consider the following example and description of the generated headers as follows:</p>
+<p>If a given query returns the expected results to the exact total of <code>90</code>, and, if limit is <code>10</code>,
+then there would be 9 (90 / 10) pages, i.e, <code>total divided by limit</code>. Using these values,
+the client can retrieve various results and navigate forth and back to the next set of results.</p>
+<ul>
+<li>HTTP Headers
+<ul>
+<li><code>X-Current-Page</code> - Shows the current page of the results-subset, e.g., can be 1 to 9 in the above example.</li>
+<li><code>X-Limit</code> - Shows the number of results per page, e.g., 10.</li>
+<li><code>X-Total-Pages</code> - Shows the total number of pages, e.g., 9.</li>
+<li><code>X-Total-Results</code> - Shows the total number of results, e.g., 90.</li>
+</ul>
+</li>
+</ul>
+<h2 id="header-pagination">Pagination <a class="permalink" href="#header-pagination" aria-hidden="true">¶</a></h2>
+<p>Along with various headers, one additional link header is  provided by the API to smoothly
+navigate to the first, previous, next and the last page. The url is automatically created
+by the API itself along with the set user values for “limit” and “page”.</p>
+<p>Consider the following <code>link</code> header, where the client is on Page 4:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-title">http:</span>//<span class="hljs-attribute">raskovnik.org</span>/<span class="hljs-attribute">api</span>/<span class="hljs-attribute">v1</span>/<span class="hljs-attribute">slices</span>?<span class="hljs-attribute">query</span>=//<span class="hljs-attribute">entryFree</span>[<span class="hljs-attribute">descendant::etym</span>/<span class="hljs-attribute">lang</span>[@<span class="hljs-attribute">value</span>=<span class="hljs-value">"tr"</span><span class="hljs-value">]]</span>/<span class="hljs-attribute">form</span>[@<span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span><span class="hljs-value">]&amp;page=1&amp;limit=10</span>&gt;</span>; rel="first",
+<span class="hljs-tag">&lt;<span class="hljs-title">http:</span>//<span class="hljs-attribute">raskovnik.org</span>/<span class="hljs-attribute">api</span>/<span class="hljs-attribute">v1</span>/<span class="hljs-attribute">slices</span>?<span class="hljs-attribute">query</span>=//<span class="hljs-attribute">entryFree</span>[<span class="hljs-attribute">descendant::etym</span>/<span class="hljs-attribute">lang</span>[@<span class="hljs-attribute">value</span>=<span class="hljs-value">"tr"</span><span class="hljs-value">]]</span>/<span class="hljs-attribute">form</span>[@<span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span><span class="hljs-value">]&amp;page=2&amp;limit=10</span>&gt;</span>; rel="prev",
+<span class="hljs-tag">&lt;<span class="hljs-title">http:</span>//<span class="hljs-attribute">raskovnik.org</span>/<span class="hljs-attribute">api</span>/<span class="hljs-attribute">v1</span>/<span class="hljs-attribute">slices</span>?<span class="hljs-attribute">query</span>=//<span class="hljs-attribute">entryFree</span>[<span class="hljs-attribute">descendant::etym</span>/<span class="hljs-attribute">lang</span>[@<span class="hljs-attribute">value</span>=<span class="hljs-value">"tr"</span><span class="hljs-value">]]</span>/<span class="hljs-attribute">form</span>[@<span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span><span class="hljs-value">]&amp;page=5&amp;limit=10</span>&gt;</span>; rel="next",
+<span class="hljs-tag">&lt;<span class="hljs-title">http:</span>//<span class="hljs-attribute">raskovnik.org</span>/<span class="hljs-attribute">api</span>/<span class="hljs-attribute">v1</span>/<span class="hljs-attribute">slices</span>?<span class="hljs-attribute">query</span>=//<span class="hljs-attribute">entryFree</span>[<span class="hljs-attribute">descendant::etym</span>/<span class="hljs-attribute">lang</span>[@<span class="hljs-attribute">value</span>=<span class="hljs-value">"tr"</span><span class="hljs-value">]]</span>/<span class="hljs-attribute">form</span>[@<span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span><span class="hljs-value">]&amp;page=273&amp;limit=10</span>&gt;</span>; rel="last"</code></pre>
+<ul>
+<li>Link Header
+<ul>
+<li><code>first</code> - Shows the url for the first page of results, marked with rel=“first”</li>
+<li><code>prev</code> - Shows the url for the previous page of results, marked with rel=“prev”</li>
+<li><code>next</code> - Shows the url for the next page of results, marked with rel=“next”</li>
+<li><code>last</code> - Shows the url for the last page of results, marked with rel=“last”</li>
+</ul>
+</li>
+</ul>
+<p><code>Note:</code> Limit can be set to <code>0</code> in order to fetch all results in a single page and remove pagination link.</p>
+<section id="" class="resource-group"><h2 class="group-heading">Resource Group <a href="#" class="permalink">&para;</a></h2><div id="entries" class="resource"><h3 class="resource-heading">Entries <a href="#entries" class="permalink">&nbsp;&para;</a></h3><p>Returns entries based on the lemma (dictionary headword) in the given dictionaries.</p>
+<div id="entries-get" class="action get"><h4 class="action-heading"><div class="name">List First Lemma Entry</div><a href="#entries-get" class="method get">GET</a><code class="uri">/v1/entries{?lemma,dict,page,limit,transform,format,group,wrap,contains}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://raskovnik.org/api</span>/v1/entries?<span class="hljs-attribute">lemma=</span><span class="hljs-literal">аба</span>&<span class="hljs-attribute">dict=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">page=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">transform=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">format=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">group=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">wrap=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">contains=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>lemma</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>аба</span></span><p>a lemma to be searched</p>
+</dd><dt>dict</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>all</span></span>&nbsp;<p>retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance <a href="http://dict=VSK.SR">dict=VSK.SR</a>,MZ.RGJS.</p>
+</dd><dt>page</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>1</span></span>&nbsp;<p>page of results expected by client.</p>
+</dd><dt>limit</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>10</span></span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>maximum number of records expected by client.</p>
+</dd><dt>transform</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.</p>
+</dd><dt>format</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>xml</span></span>&nbsp;<p>results expected by client should be in XML or JSON.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>xml</code> <code>json</code> </p></dd><dt>group</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>group results by dictionary.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>wrap</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>true</span></span>&nbsp;<p>specifies whether the returned query results are to be wrapped with a surrounding &lt;exist:result&gt; element.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>contains</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>specifies whether the lemma returned should be an exact match of the query string or if it should contain it.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/xml</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-tag">&lt;<span class="hljs-title">exist:result</span> <span class="hljs-attribute">xmlns:exist</span>=<span class="hljs-value">"http://exist.sourceforge.net/NS/exist"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"GE.RKMD.аба"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аба"</span>&gt;</span>а̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>а̄бе̑<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>ж.<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span> тако зове млађи брат или сестра старију сестру, сеја:
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>А̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> Ве̏тка,
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>а̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> Ро̑са, од тур.
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>аblа<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> им., скраћено
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>аbа<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">xr</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"negative"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">lbl</span>&gt;</span>У В. и РЈА н.<span class="hljs-tag">&lt;/<span class="hljs-title">lbl</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">xr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"GE.RKMD.А2"</span>&gt;</span>А̏<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"GE.RKMD.Абаз"</span>&gt;</span>Аба̏з<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">exist:result</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div></div></div><div id="slices" class="resource"><h3 class="resource-heading">Slices <a href="#slices" class="permalink">&nbsp;&para;</a></h3><p>Returns a dictionary “slice” on the basis of the submitted XPath query in the given dictionaries. The client should be familiar with the XML structure of the dicitonary.</p>
+<div id="slices-get" class="action get"><h4 class="action-heading"><div class="name">List First 10 Slices</div><a href="#slices-get" class="method get">GET</a><code class="uri">/v1/slices{?query,dict,page,limit,transform,format,group,wrap}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://raskovnik.org/api</span>/v1/slices?<span class="hljs-attribute">query=</span><span class="hljs-literal">/entryFree[descendant::etym/lang[@value="tr"]]/form[@type="lemma"]</span>&<span class="hljs-attribute">dict=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">page=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">transform=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">format=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">group=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">wrap=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>query</dt><dd><code>XPath</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>//entryFree[descendant::etym/lang[@value=&quot;tr&quot;]]/form[@type=&quot;lemma&quot;]</span></span><p>an XPath expression to generate the slice.
+For more details on XPath, see <a href="https://www.w3schools.com/xml/xpath_intro.asp">https://www.w3schools.com/xml/xpath_intro.asp</a>.</p>
+</dd><dt>dict</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>all</span></span>&nbsp;<p>retrieves resources for all or specific dictionaries based on their ids. Multiple ids should be comma-separated, for instance <a href="http://dict=VSK.SR">dict=VSK.SR</a>,MZ.RGJS.</p>
+</dd><dt>page</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>1</span></span>&nbsp;<p>page of results expected by client.</p>
+</dd><dt>limit</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>10</span></span>&nbsp;<p>maximum number of records expected by client.</p>
+</dd><dt>transform</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.</p>
+</dd><dt>format</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>xml</span></span>&nbsp;<p>results expected by client should be in XML or JSON.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>xml</code> <code>json</code> </p></dd><dt>group</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>group results by dictionary.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>wrap</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>true</span></span>&nbsp;<p>specifies whether the returned query results are to be wrapped with a surrounding &lt;exist:result&gt; element.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/xml</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-tag">&lt;<span class="hljs-title">exist:result</span> <span class="hljs-attribute">xmlns:exist</span>=<span class="hljs-value">"http://exist.sourceforge.net/NS/exist"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аба"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"абер"</span>&gt;</span>абе́р<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аберџија"</span>&gt;</span>аберџи́ја<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"абетер"</span>&gt;</span>а́бетер<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аванџија"</span>&gt;</span>аванџи́ја<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"авлија"</span>&gt;</span>авли́ја<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"агальк"</span>&gt;</span>агаль́к<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"адьм"</span>&gt;</span>адь́м<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аза"</span>&gt;</span>а́за<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"азьр"</span>&gt;</span>азь́р<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">exist:result</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div></div></div><div id="context" class="resource"><h3 class="resource-heading">Context <a href="#context" class="permalink">&nbsp;&para;</a></h3><p>Returns the siblings of the given entry wrapped in divs (with <code>@type</code> attribute having possible values  <code>left</code>, <code>current</code> and <code>right</code> for the
+preceding, current and following siblings respectively.)</p>
+<div id="context-get" class="action get"><h4 class="action-heading"><div class="name">List Context</div><a href="#context-get" class="method get">GET</a><code class="uri">/v1/context{?entry,left,right,return,transform,format,group,wrap}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://raskovnik.org/api</span>/v1/context?<span class="hljs-attribute">entry=</span><span class="hljs-literal">VSK.SR.поштарев</span>&<span class="hljs-attribute">left=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">right=</span><span class="hljs-literal">1</span>&<span class="hljs-attribute">return=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">transform=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">format=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">group=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">wrap=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>entry</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>VSK.SR.поштарев</span></span><p>an entry whose context is requested.</p>
+</dd><dt>left</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>10</span></span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>count of the expected preceding-siblings for the given entry. Maximum value can be <code>50</code>.</p>
+</dd><dt>right</dt><dd><code>Number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>10</span></span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span><p>count of the expected following-siblings for the given entry. Maximum value can be <code>50</code>.</p>
+</dd><dt>return</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>both</span></span>&nbsp;<p>return only preceding siblings, if set to “left”, following siblings, if set to “right”, else both.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>both</code> <code>left</code> <code>right</code> </p></dd><dt>transform</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.</p>
+</dd><dt>format</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>xml</span></span>&nbsp;<p>results expected by client should be in XML or JSON.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>xml</code> <code>json</code> </p></dd><dt>group</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>group results by dictionary.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>wrap</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>true</span></span>&nbsp;<p>specifies whether the returned query results are to be wrapped into a surrounding &lt;exist:result&gt; element.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/xml</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-tag">&lt;<span class="hljs-title">exist:result</span> <span class="hljs-attribute">xmlns:exist</span>=<span class="hljs-value">"http://exist.sourceforge.net/NS/exist"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"left"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштар"</span> <span class="hljs-attribute">sortKey</span>=<span class="hljs-value">"поштар"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштар"</span>&gt;</span>по̏шта̑р<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+            <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>m.<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">sense</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"d1e815904"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"translation"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"de"</span>&gt;</span>der Postmeister<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>,
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"translation"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"la"</span>&gt;</span>cursui publico praepositus<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>.
+                <span class="hljs-tag">&lt;<span class="hljs-title">xr</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"cf"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">lbl</span>&gt;</span>cf.<span class="hljs-tag">&lt;/<span class="hljs-title">lbl</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">"#VSK.SR.пошта.3"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>пошта<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"senseNum"</span> <span class="hljs-attribute">source</span>=<span class="hljs-value">"#thirdEd"</span>&gt;</span>[3]<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-title">ref</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">xr</span>&gt;</span>.
+            <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштапити_се"</span>&gt;</span>пошта́пити се<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштарев"</span>&gt;</span>по̏шта̑рев<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"current"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштарев"</span> <span class="hljs-attribute">sortKey</span>=<span class="hljs-value">"поштарев"</span> <span class="hljs-attribute">source</span>=<span class="hljs-value">"#firstEd"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"accidentallyOmittedFromSecondEd"</span>&gt;</span> [
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштарев"</span>&gt;</span>по̏шта̑рев<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>,
+                <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>а<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+                <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>о<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштаров"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштаров"</span>&gt;</span>по̏шта̑ров<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>а<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+                <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>о<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+            <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span> <span class="hljs-attribute">source</span>=<span class="hljs-value">"#digitalEd"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>adj.<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">sense</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"d1e815949"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"translation"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"de"</span>&gt;</span>des Postmeisters<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>. —
+                <span class="hljs-tag">&lt;<span class="hljs-title">note</span> <span class="hljs-attribute">source</span>=<span class="hljs-value">"#thirdEd"</span>&gt;</span>Из I. издања<span class="hljs-tag">&lt;/<span class="hljs-title">note</span>&gt;</span>.]
+            <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштар"</span>&gt;</span>по̏шта̑р<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштедети"</span>&gt;</span>поште́дети<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"right"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштедети"</span> <span class="hljs-attribute">sortKey</span>=<span class="hljs-value">"поштедети"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштедети"</span>&gt;</span>поште́дети<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">usg</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"diatopic"</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">ana</span>=<span class="hljs-value">"place"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"references/places.xml#istok"</span>&gt;</span>ист.<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>)
+                <span class="hljs-tag">&lt;/<span class="hljs-title">usg</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштедити"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштедити"</span>&gt;</span>поште́дити<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">usg</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"diatopic"</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">ana</span>=<span class="hljs-value">"place"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"references/places.xml#zapad"</span>&gt;</span>зап.<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>)
+                <span class="hljs-tag">&lt;/<span class="hljs-title">usg</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштедјети"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштедјети"</span>&gt;</span>поште́дјети<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">usg</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"diatopic"</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">ana</span>=<span class="hljs-value">"place"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"references/places.xml#jugozapad"</span>&gt;</span>југоз.<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>)
+                <span class="hljs-tag">&lt;/<span class="hljs-title">usg</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span> и
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"VSK.SR.поштеђети"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"поштеђети"</span>&gt;</span>поште́ђети<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">usg</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"diatopic"</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">ana</span>=<span class="hljs-value">"place"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"references/places.xml#jug"</span>&gt;</span>јуж.<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>)
+                <span class="hljs-tag">&lt;/<span class="hljs-title">usg</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+            <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>ште́ди̑м<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>v. pf.<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">sense</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"d1e816018"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"translation"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"de"</span>&gt;</span>sparen<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>,
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"translation"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"la"</span>&gt;</span>parco<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>:
+                <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"example"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">quote</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"sr"</span>&gt;</span>немој 
+                        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>поштедити<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span>труда
+                    <span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>.
+            <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштарев"</span>&gt;</span>по̏шта̑рев<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"VSK.SR.поштен"</span>&gt;</span>по̀штен<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">exist:result</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div></div></div><div id="range" class="resource"><h3 class="resource-heading">Range <a href="#range" class="permalink">&nbsp;&para;</a></h3><p>Returns a range of entries given two entry ids. It includes the “from” and “to” entries along with the result.</p>
+<div id="range-get" class="action get"><h4 class="action-heading"><div class="name">List Range</div><a href="#range-get" class="method get">GET</a><code class="uri">/v1/range{?from,to,transform,format,group,wrap}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://raskovnik.org/api</span>/v1/range?<span class="hljs-attribute">from=</span><span class="hljs-literal">MZ.RGJS.аба1</span>&<span class="hljs-attribute">to=</span><span class="hljs-literal">MZ.RGJS.абење</span>&<span class="hljs-attribute">transform=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">format=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">group=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">wrap=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>from</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>MZ.RGJS.аба1</span></span><p>an entry where search should begin from.</p>
+</dd><dt>to</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>MZ.RGJS.абење</span></span><p>an entry till search should last.</p>
+</dd><dt>transform</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.</p>
+</dd><dt>format</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>xml</span></span>&nbsp;<p>results expected by client should be in XML or JSON.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>xml</code> <code>json</code> </p></dd><dt>group</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>groups results by dictionary.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>wrap</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>true</span></span>&nbsp;<p>specifies whether the returned query results are to be wrapped within a surrounding &lt;exist:result&gt; element.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/xml</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-tag">&lt;<span class="hljs-title">exist:result</span> <span class="hljs-attribute">xmlns:exist</span>=<span class="hljs-value">"http://exist.sourceforge.net/NS/exist"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"hom"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"MZ.RGJS.аба1"</span> <span class="hljs-attribute">n</span>=<span class="hljs-value">"1"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аба"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>ж<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">etym</span>&gt;</span>(
+            <span class="hljs-tag">&lt;<span class="hljs-title">lang</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"arc"</span>&gt;</span>арам.<span class="hljs-tag">&lt;/<span class="hljs-title">lang</span>&gt;</span>)
+        <span class="hljs-tag">&lt;/<span class="hljs-title">etym</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">etym</span>&gt;</span>(
+            <span class="hljs-tag">&lt;<span class="hljs-title">lang</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"tr"</span>&gt;</span>тур.<span class="hljs-tag">&lt;/<span class="hljs-title">lang</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">mentioned</span> <span class="hljs-attribute">xml:lang</span>=<span class="hljs-value">"tr"</span>&gt;</span>abba<span class="hljs-tag">&lt;/<span class="hljs-title">mentioned</span>&gt;</span>)
+        <span class="hljs-tag">&lt;/<span class="hljs-title">etym</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">def</span>&gt;</span>одмила за мајку и старију жену уопште.<span class="hljs-tag">&lt;/<span class="hljs-title">def</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"example"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">quote</span>&gt;</span>„До́ђи, або, ма́јка ми те че́ка”<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">bibl</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">nymRef</span>=<span class="hljs-value">"Врање"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"3015"</span>&gt;</span>Врање<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>).
+                <span class="hljs-tag">&lt;/<span class="hljs-title">bibl</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">""</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.аба2"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"hom"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"MZ.RGJS.аба2"</span> <span class="hljs-attribute">n</span>=<span class="hljs-value">"2"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аба"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>ж<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">def</span>&gt;</span>бол испод груди.<span class="hljs-tag">&lt;/<span class="hljs-title">def</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"example"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">quote</span>&gt;</span>„Од ба́бу сам научила да ба́јем од а́бу.” <span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">bibl</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"hidden"</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">nymRef</span>=<span class="hljs-value">"Врање"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"3015"</span>&gt;</span>Врање<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>).
+                <span class="hljs-tag">&lt;/<span class="hljs-title">bibl</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">cit</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"example"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">quote</span>&gt;</span>„Бо́ли ме и́спод гру́ди, викав а́ба је”<span class="hljs-tag">&lt;/<span class="hljs-title">quote</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">bibl</span>&gt;</span>(
+                    <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"geo"</span> <span class="hljs-attribute">nymRef</span>=<span class="hljs-value">"Врање"</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"3015"</span>&gt;</span>Врање<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>).
+                <span class="hljs-tag">&lt;/<span class="hljs-title">bibl</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">cit</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.аба1"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.Абаз"</span>&gt;</span>Аба́з<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"MZ.RGJS.Абаз"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"Абаз"</span>&gt;</span>Аба́з<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>м<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span> (
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"inflected"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">lbl</span>&gt;</span>мн.<span class="hljs-tag">&lt;/<span class="hljs-title">lbl</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>Аба́зови<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>)
+        <span class="hljs-tag">&lt;<span class="hljs-title">sense</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">def</span>&gt;</span>надимак /Мијовце/.<span class="hljs-tag">&lt;/<span class="hljs-title">def</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">sense</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.аба2"</span>&gt;</span>а́ба<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.абење"</span>&gt;</span>абе́ње<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"MZ.RGJS.абење"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"абење"</span>&gt;</span>абе́ње<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>с<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">xr</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"verbalNounFrom"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">lbl</span>&gt;</span>гл. им. од<span class="hljs-tag">&lt;/<span class="hljs-title">lbl</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">"#MZ.RGJS.абим"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">rs</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>аби(ти)<span class="hljs-tag">&lt;/<span class="hljs-title">rs</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">ref</span>&gt;</span>.
+        <span class="hljs-tag">&lt;/<span class="hljs-title">xr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.Абаз"</span>&gt;</span>Аба́з<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"MZ.RGJS.абер"</span>&gt;</span>абе́р<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">exist:result</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div></div></div><div id="random" class="resource"><h3 class="resource-heading">Random <a href="#random" class="permalink">&nbsp;&para;</a></h3><p>Returns a random entry.</p>
+<div id="random-get" class="action get"><h4 class="action-heading"><div class="name">List Random Lemma Entry</div><a href="#random-get" class="method get">GET</a><code class="uri">/v1/random{?dict,transform,format,group,wrap}</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://raskovnik.org/api</span>/v1/random?<span class="hljs-attribute">dict=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">transform=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">format=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">group=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">wrap=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>dict</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>all</span></span>&nbsp;<p>pool of dictionaries to consider. Multiple ids should be comma-separated, for instance <a href="http://dict=VSK.SR">dict=VSK.SR</a>,MZ.RGJS.</p>
+</dd><dt>transform</dt><dd><code>String</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>name of the XSLT file (in the $TRANSFORMATION directory) that should be applied to retrieved resources before returning them.</p>
+</dd><dt>format</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>xml</span></span>&nbsp;<p>the format expected by the client.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>xml</code> <code>json</code> </p></dd><dt>group</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>false</span></span>&nbsp;<p>groups results by dictionary.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd><dt>wrap</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>true</span></span>&nbsp;<p>specifies whether the returned query results are to be wrapped within a surrounding &lt;exist:result&gt; element.</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>true</code> <code>false</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/xml</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code><span class="hljs-tag">&lt;<span class="hljs-title">exist:result</span> <span class="hljs-attribute">xmlns:exist</span>=<span class="hljs-value">"http://exist.sourceforge.net/NS/exist"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entryFree</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.tei-c.org/ns/1.0"</span> <span class="hljs-attribute">xml:id</span>=<span class="hljs-value">"GE.RKMD.аба"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"lemma"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span> <span class="hljs-attribute">norm</span>=<span class="hljs-value">"аба"</span>&gt;</span>а̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>,
+        <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"ending"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">orth</span>&gt;</span>а̄бе̑<span class="hljs-tag">&lt;/<span class="hljs-title">orth</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">gramGrp</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">pos</span>&gt;</span>ж.<span class="hljs-tag">&lt;/<span class="hljs-title">pos</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">gramGrp</span>&gt;</span> тако зове млађи брат или сестра старију сестру, сеја:
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>А̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> Ве̏тка,
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>а̑ба<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> Ро̑са, од тур.
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>аblа<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span> им., скраћено
+        <span class="hljs-tag">&lt;<span class="hljs-title">hi</span> <span class="hljs-attribute">rend</span>=<span class="hljs-value">"italic"</span>&gt;</span>аbа<span class="hljs-tag">&lt;/<span class="hljs-title">hi</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">xr</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"negative"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">lbl</span>&gt;</span>У В. и РЈА н.<span class="hljs-tag">&lt;/<span class="hljs-title">lbl</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">xr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ras:extras</span> <span class="hljs-attribute">xmlns:ras</span>=<span class="hljs-value">"http://raskovnik.org/ns/1.0"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:prev</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"GE.RKMD.А2"</span>&gt;</span>А̏<span class="hljs-tag">&lt;/<span class="hljs-title">ras:prev</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">ras:next</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"GE.RKMD.Абаз"</span>&gt;</span>Аба̏з<span class="hljs-tag">&lt;/<span class="hljs-title">ras:next</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">ras:extras</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">entryFree</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">exist:result</span>&gt;</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 02 Sep 2017</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>
